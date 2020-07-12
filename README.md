@@ -1,42 +1,17 @@
-<include a CircleCI status badge, here>
+[![CircleCI](https://circleci.com/gh/Welith/udacity-ml-microservice.svg?style=svg)](https://circleci.com/gh/Welith/udacity-ml-microservice)
+
+Udacity - Operationalize a Machine Learning Microservice API
+
 
 ## Project Overview
 
-In this project, you will apply the skills you have acquired in this course to operationalize a Machine Learning Microservice API. 
+In this project an app is contenirized using docker and is then deployed with Kubernetes. CircleCi is used to confirm correct deployment.
 
-You are given a pre-trained, `sklearn` model that has been trained to predict housing prices in Boston according to several features, such as average rooms in a home and data about highway access, teacher-to-pupil ratios, and so on. You can read more about the data, which was initially taken from Kaggle, on [the data source site](https://www.kaggle.com/c/boston-housing). This project tests your ability to operationalize a Python flask app—in a provided file, `app.py`—that serves out predictions (inference) about housing prices through API calls. This project could be extended to any pre-trained machine learning model, such as those for image recognition and data labeling.
+### Project Setup
+There are 3 scripts (.sh) files used in this project (You need to have docker installed [https://docs.docker.com/get-docker/](DOCKER) as well as python, pip and Kubernetes). After cloning the repo `cd` into the app and execute the following: 
+1. `./run_docker.sh` runs the container
+2. `./make_prediction.sh` then should be run in a separte terminal window. This script makes a request to the container and you should be able to see the JSON data in your main terminal window.
+3. `./upload_docker` then deploys the actual image to docker (in this case the script works for my DockerID, change `dockerpath="welith95/ml-predict-price"` with your DockerID.
+4. If everything is OK you should see a success message and you can then move on to run `minikube start` to set up your Kubernetes configs.
+5. `./run_kubernetes` then creates a pod for you and will execute the needed code to deploy your image. You can now run `./make_prediction.sh` (in a new terminal window) and should see handling log messages for the prediction request.
 
-### Project Tasks
-
-Your project goal is to operationalize this working, machine learning microservice using [kubernetes](https://kubernetes.io/), which is an open-source system for automating the management of containerized applications. In this project you will:
-* Test your project code using linting
-* Complete a Dockerfile to containerize this application
-* Deploy your containerized application using Docker and make a prediction
-* Improve the log statements in the source code for this application
-* Configure Kubernetes and create a Kubernetes cluster
-* Deploy a container using Kubernetes and make a prediction
-* Upload a complete Github repo with CircleCI to indicate that your code has been tested
-
-You can find a detailed [project rubric, here](https://review.udacity.com/#!/rubrics/2576/view).
-
-**The final implementation of the project will showcase your abilities to operationalize production microservices.**
-
----
-
-## Setup the Environment
-
-* Create a virtualenv and activate it
-* Run `make install` to install the necessary dependencies
-
-### Running `app.py`
-
-1. Standalone:  `python app.py`
-2. Run in Docker:  `./run_docker.sh`
-3. Run in Kubernetes:  `./run_kubernetes.sh`
-
-### Kubernetes Steps
-
-* Setup and Configure Docker locally
-* Setup and Configure Kubernetes locally
-* Create Flask app in Container
-* Run via kubectl
